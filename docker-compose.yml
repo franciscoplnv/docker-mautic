@@ -1,0 +1,67 @@
+version: "3"
+
+services:
+
+  mauticdb:
+    image: percona/percona-server:5.7
+    container_name: mauticdb
+    volumes:
+      - mysql:/var/lib/mysql
+      #- ./data/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysecret
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    networks:
+      - mautic-net
+
+  mautic:
+    image: mautic-plnv:latest
+    container_name: mautic
+    links:
+      - mauticdb:mysql
+    depends_on:
+      - mauticdb
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - MAUTIC_DB_HOST=mauticdb
+      - MYSQL_PORT_3306_TCP=3306
+      - MAUTIC_DB_USER=root
+      - MAUTIC_DB_PASSWORD=mysecret
+      - MAUTIC_DB_NAME=mautic
+      - MAUTIC_RUN_CRON_JOBS=true
+      #- MAUTIC_URL=https://des.transaccional.disfrutabox.com
+      - MAUTIC_ADMIN_EMAIL=sistemas@lonuncavisto.com
+      - MAUTIC_ADMIN_PASSWORD=mautic
+      - MAUTIC_ADMIN_USERNAME=mautic
+      - MAUTIC_ADMIN_FIRSTNAME=Mautic
+      - MAUTIC_ADMIN_LASTNAME=LoNuncaVisto
+      #- MAUTIC_VERSION=4.3
+      - PHP_INI_DATE_TIMEZONE=Europe/Madrid
+    volumes:
+      # - ./apache2.conf:/etc/apache2/sites-available/000-default.conf
+      # - ./php.ini:/usr/local/etc/php/conf.d/mautic.ini
+      - html:/var/www/html
+    networks:
+      - mautic-net
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: mysql
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root_password
+  #     MYSQL_DATABASE: mautic
+  #     MYSQL_USER: mautic
+  #     MYSQL_PASSWORD: mautic_password
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql:
+    driver: local
+  html:
+    driver: local
+networks:
+  mautic-net:
+    driver: bridge

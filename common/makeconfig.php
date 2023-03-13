@@ -40,7 +40,7 @@ if(array_key_exists('PHP_INI_DATE_TIMEZONE', $_ENV)) {
     $parameters['default_timezone'] = $_ENV['PHP_INI_DATE_TIMEZONE'];
 }
 
-$path     = '/var/www/html/app/config/local.php';
+$path     = '/var/www/html/docroot/app/config/local.php';
 $rendered = "<?php\n\$parameters = ".var_export($parameters, true).";\n";
 
 $status = file_put_contents($path, $rendered);
