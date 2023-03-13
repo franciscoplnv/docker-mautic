@@ -15,7 +15,7 @@ services:
       - mautic-net
 
   mautic:
-    image: mautic-plnv:latest
+    image: franciscolnv/mautic-plnv:v1
     container_name: mautic
     links:
       - mauticdb:mysql
@@ -32,7 +32,7 @@ services:
       - MAUTIC_DB_NAME=mautic
       - MAUTIC_RUN_CRON_JOBS=true
       #- MAUTIC_URL=https://des.transaccional.disfrutabox.com
-      - MAUTIC_ADMIN_EMAIL=sistemas@lonuncavisto.com
+      - MAUTIC_ADMIN_EMAIL=
       - MAUTIC_ADMIN_PASSWORD=mautic
       - MAUTIC_ADMIN_USERNAME=mautic
       - MAUTIC_ADMIN_FIRSTNAME=Mautic
