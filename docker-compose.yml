@@ -7,7 +7,6 @@ services:
     container_name: mauticdb
     volumes:
       - mysql:/var/lib/mysql
-      #- ./data/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=mysecret
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
@@ -31,31 +30,17 @@ services:
       - MAUTIC_DB_PASSWORD=mysecret
       - MAUTIC_DB_NAME=mautic
       - MAUTIC_RUN_CRON_JOBS=true
-      #- MAUTIC_URL=https://des.transaccional.disfrutabox.com
+      - MAUTIC_URL=https://
       - MAUTIC_ADMIN_EMAIL=
       - MAUTIC_ADMIN_PASSWORD=mautic
       - MAUTIC_ADMIN_USERNAME=mautic
       - MAUTIC_ADMIN_FIRSTNAME=Mautic
-      - MAUTIC_ADMIN_LASTNAME=LoNuncaVisto
-      #- MAUTIC_VERSION=4.3
+      - MAUTIC_ADMIN_LASTNAME=Mautic
       - PHP_INI_DATE_TIMEZONE=Europe/Madrid
     volumes:
-      # - ./apache2.conf:/etc/apache2/sites-available/000-default.conf
-      # - ./php.ini:/usr/local/etc/php/conf.d/mautic.ini
       - html:/var/www/html
     networks:
       - mautic-net
-  # mysql:
-  #   image: mysql:8.0
-  #   container_name: mysql
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root_password
-  #     MYSQL_DATABASE: mautic
-  #     MYSQL_USER: mautic
-  #     MYSQL_PASSWORD: mautic_password
-  #   volumes:
-  #     - mysql_data:/var/lib/mysql
 
 volumes:
   mysql:
