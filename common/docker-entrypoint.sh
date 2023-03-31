@@ -111,7 +111,7 @@ echo >&2 "Database Username: $MAUTIC_DB_USER"
 echo >&2 "Database Password: $MAUTIC_DB_PASSWORD"
 
 # Write the database connection to the config so the installer prefills it
-if ! [ -e app/config/local.php ]; then
+if ! [ -e /var/www/html/docroot/app/config/local.php ]; then
         php /makeconfig.php
         # Make sure our web user owns the config file if it exists
         chown www-data:www-data /var/www/html/docroot/app/config/local.php
